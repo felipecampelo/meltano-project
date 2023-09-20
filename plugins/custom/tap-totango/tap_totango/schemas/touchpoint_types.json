@@ -1,0 +1,38 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": ["string", "null"]
+    },
+    "service_id": {
+      "type": ["number", "null", "string"]
+    },
+    "display_name": {
+      "type": ["string", "null"]
+    },
+    "icon": {
+      "type": ["string", "null"]
+    },
+    "created_by": {
+      "type": ["string", "null"]
+    },
+    "updated_by": {
+      "type": ["string", "null"]
+    },
+    "created_at": {
+      "type": ["string", "null"]
+    },
+    "updated_at": {
+      "type": ["string", "null"]
+    },
+    "used": {
+      "type": ["number", "null"]
+    },
+    "nonEditable": {
+      "type": ["boolean", "null"]
+    },
+    "isDefault": {
+      "type": ["boolean", "null"]
+    }
+  }
+}

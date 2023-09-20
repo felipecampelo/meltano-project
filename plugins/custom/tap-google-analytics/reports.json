@@ -1,0 +1,46 @@
+[
+  {
+    "name": "page_path",
+    "dimensions": [
+      "sessionDefaultChannelGroup",
+      "sessionSourceMedium",
+      "date",
+      "deviceCategory",
+      "hostName",
+      "country",
+      "pagePath",
+      "pageTitle",
+      "sessionCampaignName"
+    ],
+    "metrics": [
+      "sessions",
+      "screenPageViews",
+      "engagedSessions",
+      "conversions",
+      "eventsPerSession"
+    ]
+  },
+  {
+    "name": "web_traffic",
+    "dimensions": [
+      "sessionDefaultChannelGroup",
+      "sessionSourceMedium",
+      "date",
+      "hostName",
+      "country",
+      "deviceCategory",
+      "sessionCampaignName"
+    ],
+    "metrics": [
+      "sessions",
+      "screenPageViews",
+      "totalUsers",
+      "eventCountPerUser",
+      "activeUsers",
+      "engagedSessions",
+      "engagementRate",
+      "conversions",
+      "eventsPerSession"
+    ]
+  }
+]

@@ -1,0 +1,192 @@
+plugins:
+  extractors:
+  - name: tap-cvent--events
+    inherit_from: tap-cvent
+    settings:
+    - name: client_id
+      value: 0oanaxszpgJL6KQfw1t7
+    - name: scope
+      value: event/events:read
+    - name: Cvent_OAuth_key
+      kind: password
+      value: $CVENT_OAUTH_KEY
+    select:
+    - cvent__events.*
+
+  - name: tap-totango--accounts
+    inherit_from: tap-totango
+    select:
+    - accounts.*
+
+  - name: tap-totango--events
+    inherit_from: tap-totango
+    select:
+    - events.*
+
+  - name: tap-totango--users
+    inherit_from: tap-totango
+    select:
+    - users.*
+
+  - name: tap-totango--touchpoint_types
+    inherit_from: tap-totango
+    select:
+    - touchpoint_types.*
+
+  - name: tap-totango--touchpoint_tags
+    inherit_from: tap-totango
+    select:
+    - touchpoint_tags.*
+
+  - name: tap-totango--touchpoints
+    inherit_from: tap-totango
+    select:
+    - touchpoints.*
+
+  - name: tap-google-analytics--web_traffic
+    inherit_from: tap-google-analytics
+    select:
+    - web_traffic.*
+
+  - name: tap-google-analytics--page_path
+    inherit_from: tap-google-analytics
+    select:
+    - page_path.*
+
+  - name: tap-okta--users
+    inherit_from: tap-okta
+  - name: tap-spreadsheets-anywhere--events
+    inherit_from: tap-spreadsheets-anywhere
+    config:
+      tables:
+      - path: s3://meltano-lake
+        name: cvent__events
+        # search_prefix: cvent__events
+        pattern: cvent__events/*.*
+        start_date: '2000-01-01T00:00:00+00'
+        key_properties: [id]
+        format: detect
+
+  loaders:
+  - name: target-s3--events
+    inherit_from: target-s3
+    config:
+      cloud_provider:
+        aws:
+          aws_bucket: meltano-lake
+          aws_region: us-east-1
+      format:
+        format_type: json
+      include_process_date: true
+      append_date_to_prefix: false
+      prefix: cvent
+      flattening_max_depth: 1
+      # flattening_enabled: true ## DOES NOT WORK
+      flatten_records: true
+
+
+  - name: jsonl--dev
+    inherit_from: target-jsonl
+  - name: target-snowflake--events
+    inherit_from: target-snowflake
+    config:
+      account: ioa36847.us-east-1
+      dbname: $SNOWFLAKE_DBNAME
+      user: ${TARGET_SNOWFLAKE_USER}
+      warehouse: ${SNOWFLAKE_WAREHOUSE}
+      file_format: $CVENT_FILE_FORMAT
+      s3_bucket: meltano-lake
+      stage: $CVENT_STAGE
+      default_target_schema: CVENT
+      role: ${SNOWFLAKE_ROLE}
+      add_metadata_columns: true
+      data_flattening_max_level: 3
+
+  - name: target-snowflake--totango
+    inherit_from: target-snowflake
+    config:
+      account: ioa36847.us-east-1
+      dbname: $SNOWFLAKE_DBNAME
+      user: ${TARGET_SNOWFLAKE_USER}
+      warehouse: ${SNOWFLAKE_WAREHOUSE}
+      file_format: $TOTANGO_FILE_FORMAT
+      default_target_schema: TOTANGO_API
+      role: ${SNOWFLAKE_ROLE}
+      add_metadata_columns: true
+
+  - name: target-snowflake--okta
+    inherit_from: target-snowflake
+    config:
+      account: ioa36847.us-east-1
+      dbname: $SNOWFLAKE_DBNAME
+      user: ${TARGET_SNOWFLAKE_USER}
+      warehouse: ${SNOWFLAKE_WAREHOUSE}
+      file_format: $OKTA_FILE_FORMAT
+      default_target_schema: OKTA
+      role: ${SNOWFLAKE_ROLE}
+      add_metadata_columns: true
+
+  - name: target-snowflake--ga4
+    inherit_from: target-snowflake
+    config:
+      account: ioa36847.us-east-1
+      dbname: $SNOWFLAKE_DBNAME
+      user: ${TARGET_SNOWFLAKE_USER}
+      warehouse: ${SNOWFLAKE_WAREHOUSE}
+      file_format: $GA4_FILE_FORMAT
+      default_target_schema: GA4
+      role: ${SNOWFLAKE_ROLE}
+      add_metadata_columns: true
+
+  # mappers:
+  # - name: general-map
+  #   inherit_from: meltano-map-transformer
+  #   mappings:
+  #   - name: map-categories
+  #     config:
+  #       stream_maps:
+  #         public-categori:
+  #           category_id: category_id
+  #           category_name: category_name
+  #           __filter__: category_id > 4
+  #           __else__: __NULL__
+
+
+# In this job section, an 'alias' is created, then the tap --> target run can be called by it's alias.
+# To run this pipeline using Meltano CLI, 'meltano environment={your_environment} run categories-pipeline', replacing your_environment by the value of interest
+
+jobs:
+- name: google-analytics-pipeline--web_traffic
+  tasks:
+  - tap-google-analytics--web_traffic target-snowflake--ga4
+- name: google-analytics-pipeline--page_path
+  tasks:
+  - tap-google-analytics--page_path target-snowflake--ga4
+- name: events-pipeline
+  tasks:
+  # - tap-cvent--events target-snowflake--events
+  - tap-cvent--events target-s3--events
+  - tap-spreadsheets-anywhere--events target-snowflake--events
+  # - tap-postgres--categories map-categories jsonl--categories
+- name: totango-pipeline--accounts
+  tasks:
+  - tap-totango--accounts target-snowflake--totango
+- name: totango-pipeline--events
+  tasks:
+  - tap-totango--events target-snowflake--totango
+- name: totango-pipeline--users
+  tasks:
+  - tap-totango--users target-snowflake--totango
+- name: totango-pipeline--touchpoint_types
+  tasks:
+  - tap-totango--touchpoint_types target-snowflake--totango
+- name: totango-pipeline--touchpoint_tags
+  tasks:
+  - tap-totango--touchpoint_tags target-snowflake--totango
+- name: totango-pipeline--touchpoints
+  tasks:
+  - tap-totango--touchpoints target-snowflake--totango
+
+- name: okta-pipeline
+  tasks:
+  - tap-okta--users target-snowflake--okta

@@ -1,0 +1,15 @@
+version: 1
+send_anonymous_usage_stats: true
+project_id: tap-totango
+default_environment: dev
+environments:
+- name: dev
+
+include_paths:
+  - ./config.yml
+
+plugins:
+  loaders:
+  - name: target-jsonl
+    variant: andyh1203
+    pip_url: target-jsonl

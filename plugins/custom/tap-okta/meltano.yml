@@ -1,0 +1,30 @@
+version: 1
+send_anonymous_usage_stats: true
+project_id: "tap-okta"
+default_environment: env
+environments:
+- name: env
+plugins:
+  extractors:
+  - name: "tap-okta"
+    namespace: "tap_okta"
+    pip_url: -e .
+    capabilities:
+    - state
+    - catalog
+    - discover
+    - about
+    - stream-maps
+    config:
+      start_date: '2010-01-01T00:00:00Z'
+    settings:
+    - name: api_url
+      kind: string
+      value: https://alfrescosoftware-customer.okta.com
+    - name: auth_token
+      kind: password
+      value: ${OKTA_AUTH_TOKEN}
+  loaders:
+  - name: target-jsonl
+    variant: andyh1203
+    pip_url: target-jsonl

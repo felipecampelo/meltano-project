@@ -1,0 +1,51 @@
+{
+  "type": ["object", "null"],
+  "required": [],
+  "properties": {
+    "id": {
+      "type": ["string", "null"]
+    },
+    "service_id": {
+      "type": ["string", "null"]
+    },
+    "external_id": {
+      "type": ["string", "null"]
+    },
+    "account_service_id": {
+      "type": ["string", "null"]
+    },
+    "account_name": {
+      "type": ["string", "null"]
+    },
+    "touchpoint_subject": {
+      "type": ["string", "null"]
+    },
+    "touchpoint_type": {
+      "type": ["string", "null"]
+    },
+    "success_flow": {
+      "type": ["string", "null"]
+    },
+    "created": {
+      "type": ["string", "null"]
+    },
+    "contacts": {
+      "type": ["array", "null"]
+    },
+    "internal_users": {
+      "type": ["string", "null"]
+    },
+    "reasons": {
+      "type": ["string", "null"]
+    },
+    "participant_roles": {
+      "type": ["string", "null"]
+    },
+    "creator": {
+      "type": ["string", "null"]
+    },
+    "last_updated": {
+      "type": ["string", "null"]
+    }
+  }
+}

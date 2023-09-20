@@ -1,0 +1,8 @@
+/plugins/**/*.lock
+/.env
+.meltano
+venv
+.venv
+venv8
+.vscode
+/output/*

@@ -1,0 +1,53 @@
+{
+    "type": [
+        "object",
+        "null"
+    ],
+    "required": [],
+    "properties": {
+        "id": {
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "name": {
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "display_name": {
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "first_activity_time": {
+            "type": [
+                "number",
+                "null"
+            ]
+        },
+        "last_activity_time": {
+            "type": [
+                "number",
+                "null"
+            ]
+        },
+        "selected_fields": {
+            "type": [
+                "array",
+                "null"
+            ],
+            "items": {
+                "type": [
+                    "number",
+                    "string",
+                    "object",
+                    "null"
+                ]
+            }
+        }
+    }
+}

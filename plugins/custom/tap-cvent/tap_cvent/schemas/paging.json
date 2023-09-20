@@ -1,0 +1,42 @@
+{
+    "type": "object",
+    "required": [],
+    "properties": {
+      "_links": {
+        "type": "object",
+        "required": [],
+        "properties": {
+          "next": {
+            "type": "object",
+            "required": [],
+            "properties": {
+              "href": {
+                "type": "string"
+              }
+            }
+          },
+          "self": {
+            "type": "object",
+            "required": [],
+            "properties": {
+              "href": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "limit": {
+        "type": "number"
+      },
+      "totalCount": {
+        "type": "number"
+      },
+      "nextToken": {
+        "type": "string"
+      },
+      "currentToken": {
+        "type": "string"
+      }
+    }
+  }

@@ -1,0 +1,18 @@
+{
+    "type": ["object", "null"],
+    "required": [],
+    "properties": {
+      "name": {
+        "type": ["string", "null"]
+      },
+      "display_name": {
+        "type": ["string", "null"]
+      },
+      "selected_fields": {
+        "type": ["array", "null"],
+        "items": {
+          "type": ["number", "string", "object", "null"]
+        }
+      }
+    }
+  }

@@ -1,0 +1,12 @@
+plugins:
+  loaders:
+
+  - name: target-jsonl
+    variant: andyh1203
+    pip_url: target-jsonl
+  - name: target-s3
+    variant: crowemi
+    pip_url: git+https://github.com/crowemi/target-s3.git
+  - name: target-snowflake
+    variant: transferwise
+    pip_url: pipelinewise-target-snowflake

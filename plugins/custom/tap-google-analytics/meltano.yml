@@ -1,0 +1,32 @@
+version: 1
+send_anonymous_usage_stats: true
+project_id: tap-google-analytics
+default_environment: test
+environments:
+- name: test
+  # env:
+  #   TAP_GA4_CLIENT_SECRETS: ${TAP_GA4_CLIENT_SECRETS}
+
+plugins:
+  extractors:
+  - name: tap-google-analytics
+    namespace: tap_google_analytics
+    pip_url: -e .
+    # executable: ./tap-google-analytics.sh
+    capabilities:
+    - state
+    - catalog
+    - discover
+    - about
+    config:
+     start_date: '2021-01-01T00:00:00Z'
+     reports: reports.json
+     client_secrets_str: $TAP_GA4_CLIENT_SECRETS
+     property_id: '256794010'
+    settings:
+    - name: start_date
+      value: '2010-01-01T00:00:00Z'
+  loaders:
+  - name: target-jsonl
+    variant: andyh1203
+    pip_url: target-jsonl

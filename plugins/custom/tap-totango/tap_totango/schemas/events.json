@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "properties": {
+    "id": { "type": ["string", "null"] },
+    "timestamp": { "type": ["number", "null"] },
+    "type": { "type": ["string", "null"] },
+    "account": { 
+      "type": ["object", "null"],
+      "properties": {
+        "id": { "type": ["string", "null"] }
+      }
+    },
+    "is_new": { "type": ["boolean", "null"] },
+    "note_content": {
+      "type": ["object", "null"],
+      "properties": {
+        "text": { "type": ["string", "null"] },
+        "totango_user": { 
+          "type": ["object", "null"],
+          "properties": {
+            "user_name": { "type": ["string", "null"] }
+          }
+        },
+        "note_id": { "type": ["number", "null"] }
+      }
+    },
+    "properties": {
+      "type": ["object", "null"]
+    }
+  }
+}

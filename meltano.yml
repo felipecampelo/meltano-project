@@ -1,0 +1,30 @@
+#Main file for the meltano project 
+
+include_paths:
+- ./pipelines/**/*.yml
+- ./plugins/custom/custom_config.yml
+- ./plugins/custom/totango_config.yml
+- ./plugins/extractors/extractors_config.yml
+- ./plugins/loaders/loaders_config.yml
+  # - ./plugins/mappers/mappers_config.yml
+- env_config.yml
+
+
+#This section configures the buckets to store the state files
+state_backend:
+
+# #Azure state_backend
+#   uri: azure://<your container_name>/<prefix for state JSON blobs>
+#   azure:
+#     connection_string: ${AZURE_CONN_STATE_BACKEND}
+
+#AWS state_backend
+  uri: s3://meltano-lake/meltano-state
+  s3:
+    aws_access_key_id: ${AWS_ID}
+    aws_secret_access_key: ${AWS_PSW}
+
+version: 1
+project_id: 87c45564-8e29-4604-85c9-e1a5a2db553e
+
+default_environment: dev

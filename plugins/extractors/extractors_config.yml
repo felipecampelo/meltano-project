@@ -1,0 +1,15 @@
+#File to place global extractors configurations
+
+plugins:
+  extractors:
+  - name: tap-spreadsheets-anywhere
+    variant: ets
+    pip_url: git+https://github.com/ets/tap-spreadsheets-anywhere.git
+  # - name: tap-ga4
+  #   variant: meltanolabs
+  #   pip_url: git+https://github.com/MeltanoLabs/tap-google-analytics.git
+  #   config:
+  #    start_date: '2021-01-01T00:00:00Z'
+  #    reports: ./plugins/extractors/reports.json
+
+

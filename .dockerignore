@@ -1,0 +1,8 @@
+/.git
+
+# .gitignore
+/plugins/**/*.lock
+/.env
+
+# custom
+/.meltano

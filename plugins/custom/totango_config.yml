@@ -1,0 +1,343 @@
+plugins:
+  extractors:
+  - name: tap-totango
+    namespace: tap_totango
+    variant: indiciumtech
+    pip_url: ./plugins/custom/tap-totango
+    executable: tap-totango
+    capabilities:
+    - catalog
+    - discover
+    - state
+    - about
+    - stream-maps
+    settings:
+    - name: api_url
+      kind: string
+      value: https://api.totango.com
+      documentation: https://support.totango.com/hc/en-us/articles/360048132792-Search-API-events-
+      description: |
+        The url for the API services. 
+
+        https://api.totango.com is for US services, whereas https://api-eu1.totango.com is for EU services.
+    - name: auth_token
+      kind: password
+      value: ${TOTANGO_AUTH_TOKEN}
+      documentation: https://support.totango.com/hc/en-us/articles/203036939-Personal-Access-Token-and-Service-ID
+      description: |
+        The token to authenticate against the API service.
+    - name: events_terms
+      kind: array
+      value: []
+      documentation: https://support.totango.com/hc/en-us/articles/360048132792-Search-API-events-
+      description: |
+        An array containing filter conditions to use for the events stream search.
+    - name: events_count
+      kind: integer
+      value: 997
+      documentation: https://support.totango.com/hc/en-us/articles/360048132792-Search-API-events-
+      description: |
+        The maximum number of accounts to return in the events result set.
+
+        The max. value for count is `1000`.
+    - name: events_offset
+      kind: integer
+      value: 0
+      documentation: https://support.totango.com/hc/en-us/articles/360048132792-Search-API-events-
+      description: |
+        Page number (0 is the 1st-page).
+    - name: account_id
+      kind: string
+      documentation: https://support.totango.com/hc/en-us/articles/360048132792-Search-API-events-
+      description: |
+        Filter the events stream results for a specific account.
+    - name: accounts_terms
+      kind: array
+      value: []
+      documentation: https://support.totango.com/hc/en-us/articles/204174135-Search-API-accounts-and-users-
+      description: |
+        An array containing filter conditions to use for the accounts stream search.
+    - name: accounts_fields
+      kind: array
+      value: []
+      documentation: https://support.totango.com/hc/en-us/articles/204174135-Search-API-accounts-and-users-
+      description: |
+        List of fields to return as results. 
+
+        Note that the account name and account-id are always returned as well.
+    - name: accounts_count
+      kind: integer
+      value: 997
+      documentation: https://support.totango.com/hc/en-us/articles/204174135-Search-API-accounts-and-users-
+      description: |
+        The maximum number of accounts to return in the accounts result set. 
+
+        The max. value for count is 1000.
+    - name: accounts_offset
+      kind: integer
+      value: 0
+      documentation: https://support.totango.com/hc/en-us/articles/204174135-Search-API-accounts-and-users-
+      description: |
+        Record number (0 states "start at record 0"). 
+
+        The record size can be defined using the count parameter (and limited to 1000). 
+
+        Tip: To page through results, ask for 1000 records (count: 1000). If you receive 1000 records, assume there’s more, in which case you want to pull the next 1000 records (offset: 1000…then 2000…etc.). Repeat paging until the number of records returned is less than 1000.
+    - name: accounts_sort_by
+      kind: string
+      value: display_name
+      documentation: https://support.totango.com/hc/en-us/articles/204174135-Search-API-accounts-and-users-
+      description: |
+        Field name to sort the accounts stream results set by.
+    - name: accounts_sort_order
+      kind: string
+      value: ASC
+      documentation: https://support.totango.com/hc/en-us/articles/204174135-Search-API-accounts-and-users-
+      description: |
+        Order to sort the accounts stream results set by.
+    - name: users_terms
+      kind: array
+      value: []
+      documentation: https://support.totango.com/hc/en-us/articles/204174135-Search-API-accounts-and-users-
+      description: |
+        An array containing filter conditions to use for the users stream search.
+    - name: users_fields
+      kind: array
+      value: []
+      documentation: https://support.totango.com/hc/en-us/articles/204174135-Search-API-accounts-and-users-
+      description: |
+        List of fields to return as results. 
+
+        Note that the account name and account-id are always returned as well.
+    - name: users_count
+      kind: integer
+      value: 997
+      documentation: https://support.totango.com/hc/en-us/articles/204174135-Search-API-accounts-and-users-
+      description: |
+        The maximum number of accounts to return in the users result set. 
+
+        The max. value for count is 1000.
+    - name: users_offset
+      kind: integer
+      value: 0
+      documentation: https://support.totango.com/hc/en-us/articles/204174135-Search-API-accounts-and-users-
+      description: |
+        Record number (0 states "start at record 0"). 
+
+        The record size can be defined using the count parameter (and limited to 1000). 
+
+        Tip: To page through results, ask for 1000 records (count: 1000). If you receive 1000 records, assume there’s more, in which case you want to pull the next 1000 records (offset: 1000…then 2000…etc.). Repeat paging until the number of records returned is less than 1000.
+    - name: users_sort_by
+      kind: string
+      value: display_name
+      documentation: https://support.totango.com/hc/en-us/articles/204174135-Search-API-accounts-and-users-
+      description: |
+        Field name to sort the users stream results set by.
+    - name: users_sort_order
+      kind: string
+      value: ASC
+      documentation: https://support.totango.com/hc/en-us/articles/204174135-Search-API-accounts-and-users-
+      description: |
+        Order to sort the users stream results set by.
+    - name: touchpoints_count
+      kind: integer
+      value: 1000
+    - name: touchpoints_offset
+      kind: integer
+      value: 0
+    - name: touchpoints_terms
+      kind: array
+      value: []
+    - name: touchpoints_fields
+      kind: array
+      value: []
+    config:
+      # account_id: 0015c00002SJSLoAAP
+      stream_maps:
+        accounts:
+          name: name
+          display_name: display_name
+          selected_fields: __NULL__
+          account_type: str(selected_fields[0])
+          status: str(selected_fields[1])
+          health: str(selected_fields[2])
+          contract_value: str(selected_fields[3])
+          status_group: str(selected_fields[4])
+          risk_status: str(selected_fields[5])
+          risk_Reason: str(selected_fields[6])
+          tier: str(selected_fields[7])
+          last_payment_date: str(selected_fields[8])
+          last_payment_amount: str(selected_fields[9])
+          next_payment_due_date: str(selected_fields[10])
+          payment_method_expiration_date: str(selected_fields[11])
+          conversion_likelihood: str(selected_fields[12])
+        users:
+          id: id
+          name: name
+          display_name: display_name
+          selected_fields: __NULL__
+          email: str(selected_fields[0])
+          key_contact: str(selected_fields[1])
+          contact_account_role: str(selected_fields[2])
+          activity_days_agg_14d: str(selected_fields[3])
+          by_activity_agg_14d: str(selected_fields[4])
+          by_module_agg_14d: str(selected_fields[5])
+          satisfaction_score: str(selected_fields[6])
+          campaign_unsubscribe: str(selected_fields[7])
+          title: str(selected_fields[8])
+          last_activity_time: str(selected_fields[9])
+          total_activities_agg_14d: str(selected_fields[10])
+      users_terms:
+      - type: parent_account
+        terms:
+        - type: string
+          term: status_group
+          in_list:
+          - paying
+      users_fields:
+      - type: string_attribute
+        attribute: Email
+        field_display_name: Email
+      - type: string_attribute
+        attribute: Key Contact
+        field_display_name: Key Contact
+      - type: string_attribute
+        attribute: contact_account_role
+        field_display_name: Account Role
+      - type: named_aggregation
+        aggregation: activity_days
+        field_display_name: Number of active days (14d)
+        duration: 14
+      - type: activity_aggregation
+        activity: By Activity
+        field_display_name: By Activity (14d)
+        duration: 14
+      - type: activity_aggregation
+        activity: By Module
+        field_display_name: By Module (14d)
+        duration: 14
+      - type: number_attribute
+        attribute: Satisfaction score
+        field_display_name: Satisfaction score
+      - type: string_attribute
+        attribute: campaign_unsubscribe
+        field_display_name: Campaigns Unsubscribe
+      - type: string_attribute
+        attribute: Title
+        field_display_name: Title
+      - type: date
+        term: last_activity_time
+        field_display_name: Last activity
+        desc: true
+      - type: named_aggregation
+        aggregation: total_activities
+        duration: 14
+        field_display_name: Activities (14d)
+      accounts_terms:
+      - type: string
+        term: status_group
+        query_term_id: status_group
+        in_list:
+        - paying
+      accounts_fields:
+      - type: string_attribute
+        attribute: Account Type
+        field_display_name: Account Type
+      - type: string_attribute
+        attribute: Status
+        field_display_name: Status
+      - type: string
+        term: health
+        field_display_name: Health rank
+      - type: number_attribute
+        attribute: Contract Value
+        field_display_name: Contract Value
+        desc: true
+      - type: string
+        term: status_group
+        field_display_name: Status
+      - type: lifecycle_attribute
+        attribute: Risk Status
+        field_display_name: Risk Status
+      - type: string_attribute
+        attribute: Risk Reason
+        field_display_name: Risk Reason
+      - type: list_attribute
+        attribute: Tier
+        field_display_name: Tier
+      - type: simple_date_attribute
+        attribute: Last Payment Date
+        field_display_name: Last Payment Date
+      - type: number_attribute
+        attribute: Last Payment Amount
+        field_display_name: Last Payment Amount
+      - type: simple_date_attribute
+        attribute: Next Payment Due Date
+        field_display_name: Next Payment Due Date
+      - type: simple_date_attribute
+        attribute: Payment Method Expiration Date
+        field_display_name: Payment Method Expiration Date
+      - type: lifecycle_attribute
+        attribute: Conversion Likelihood
+        field_display_name: Conversion Likelihood
+      events_terms:
+      - type: or
+        or:
+        - type: event_property
+          name: event_type
+          eq: note
+        - type: event_property
+          name: event_type
+          eq: campaign_touch
+      touchpoints_terms:
+      - type: parent_account
+        terms:
+        - type: number_attribute
+          attribute: Contract Value
+          exists: true
+      - type: string
+        term: collection_type
+        eq: touchpoint_collection
+      touchpoints_fields:
+      - type: string_attribute
+        attribute: touchpoint_subject
+        field_display_name: Touchpoint Subject
+      - type: string_attribute
+        attribute: touchpoint_type
+        field_display_name: Touchpoint Type
+      - type: string_attribute
+        attribute: success_flow
+        field_display_name: Touchpoint SuccessFlow
+      - type: date_attribute
+        attribute: created
+        field_display_name: Touchpoint Create Date
+      - type: multi_value_string_attribute
+        attribute: contacts
+        field_display_name: Touchpoint External Participants
+      - type: multi_value_string_attribute
+        attribute: internal_users
+        field_display_name: Touchpoint Internal Participants
+      - type: multi_value_string_attribute
+        attribute: reasons
+        field_display_name: Touchpoint Reason
+      - type: multi_value_string_attribute
+        attribute: participant_roles
+        field_display_name: Touchpoint Internal Participant Role
+      - type: string_attribute
+        attribute: creator
+        field_display_name: Touchpoint Creator
+      - type: date_attribute
+        attribute: last_updated
+        field_display_name: Touchpoint Update Date
+      touchpoints_parent_account_fields:
+      - type: number_attribute
+        attribute: Contract Value
+        field_display_name: Contract Value
+        index: 10
+    # select:
+    # - accounts.*
+    # - events.*
+    # - users.*
+    # - touchpoint_types.*
+    # - touchpoint_tags.*
+    # - touchpoints.*
