@@ -46,6 +46,8 @@ jobs:
       # Testing if every pipeline is working as expected
       - name: Testing OKTA Pipeline
         run: |
+          pip install meltano==2.19.1
+          pip install -r requirements.txt
           export START_DATE_TAPOKTA_DEV=$(date +%Y-%m-%d -d '1 day ago')
           meltano --environment=dev run okta-pipeline
       - name: Testing TOTANGO Pipeline
@@ -64,11 +66,10 @@ jobs:
       - name: Testing CVENT Pipeline
         run: |
           meltano --environment=dev run events-pipeline
-
+          
   build-docker-image:
     name: Building Docker Image
     runs-on: ubuntu-latest
-    needs: test-pipelines
 
     steps:
       - name: Checkout Code
