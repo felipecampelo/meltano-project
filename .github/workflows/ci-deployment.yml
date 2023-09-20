@@ -38,10 +38,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
 
-      - name: Install and Cache Dependencies
+      - name: Installing Meltano and Dependencies
         run: |
           pip install meltano==2.19.1
           pip install -r requirements.txt
+          meltano install
 
       # Testing if every pipeline is working as expected
       - name: Testing TOTANGO Pipeline
