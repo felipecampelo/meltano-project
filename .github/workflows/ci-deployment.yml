@@ -10,6 +10,7 @@ jobs:
     name: Testing the Pipelines
     runs-on: ubuntu-latest
     env:
+      TOTANGO_AUTH_TOKEN: ${{ secrets.TOTANGO_AUTH_TOKEN }}
       OKTA_AUTH_TOKEN: ${{ secrets.OKTA_AUTH_TOKEN }}
       TARGET_SNOWFLAKE_USER: ${{ secrets.TARGET_SNOWFLAKE_USER }}
       TARGET_SNOWFLAKE_PASSWORD: ${{ secrets.TARGET_SNOWFLAKE_PASSWORD }}
