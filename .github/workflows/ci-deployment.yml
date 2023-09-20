@@ -30,7 +30,15 @@ jobs:
         with:
           python-version: 3.8
 
-      - name: Installing Dependencies
+      - name: Cache Dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install and Cache Dependencies
         run: |
           pip install meltano==2.19.1
           pip install -r requirements.txt
