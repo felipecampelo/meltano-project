@@ -1,0 +1,53 @@
+name: Meltano CI
+
+on:
+  pull_request:
+    branches:
+      - latest
+
+jobs:
+  test-pipelines:
+    runs-on: meltano/meltano:v2.19.1-python3.8
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    # Testing if every pipeline is working as expected
+    - name: Testing OKTA Pipeline
+      run: |
+        meltano install
+        export START_DATE_TAPOKTA_DEV=$(date +%Y-%m-%d -d '1 day ago')
+        meltano --environment=dev run okta-pipeline
+    - name: Testing TOTANGO Pipeline
+      run: |
+        meltano install
+        meltano --environment=dev run totango-pipeline--accounts
+        meltano --environment=dev run totango-pipeline--events
+        meltano --environment=dev run totango-pipeline--users
+        meltano --environment=dev run totango-pipeline--touchpoint_types
+        meltano --environment=dev run totango-pipeline--touchpoint_tags
+        meltano --environment=dev run totango-pipeline--touchpoints
+    - name: Testing GA4 Pipeline
+      run: |
+        meltano install
+        export START_DATE_TAPGA4_DEV=$(date +%Y-%m-%d -d '1 day ago')
+        meltano --environment=dev run google-analytics-pipeline--web_traffic
+        meltano --environment=dev run google-analytics-pipeline--page_path
+    - name: Testing CVENT Pipeline
+      run: |
+        meltano install
+        meltano --environment=dev run events-pipeline
+
+  build-docker-image:
+    runs-on: ubuntu-latest
+    needs: test-pipelines
+    
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+      
+    # Building docker image
+    - name: Build Docker File
+      run: |
+        docker build -t meltano_test .
