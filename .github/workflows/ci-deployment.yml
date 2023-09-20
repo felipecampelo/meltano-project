@@ -9,7 +9,18 @@ jobs:
   test-pipelines:
     name: Testing the Pipelines
     runs-on: ubuntu-latest
-    
+    env:
+      OKTA_AUTH_TOKEN: ${{ secrets.OKTA_AUTH_TOKEN }}
+      TARGET_SNOWFLAKE_USER: ${{ secrets.TARGET_SNOWFLAKE_USER }}
+      TARGET_SNOWFLAKE_PASSWORD: ${{ secrets.TARGET_SNOWFLAKE_PASSWORD }}
+      SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
+      SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
+      AWS_ID: ${{ secrets.AWS_ID }}
+      AWS_PSW: ${{ secrets.AWS_PSW }}
+      CVENT_OAUTH_KEY: ${{ secrets.CVENT_OAUTH_KEY }}
+      TAP_GA4_PROPERTY_ID: ${{ secrets.TAP_GA4_PROPERTY_ID }}
+      TAP_GA4_CLIENT_SECRETS: ${{ secrets.TAP_GA4_CLIENT_SECRETS }}
+      
     steps:
       - name: Checkout the repo
         uses: actions/checkout@v3
