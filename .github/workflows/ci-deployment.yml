@@ -3,7 +3,7 @@ name: Meltano CI
 on:
   pull_request:
     branches:
-      - latest
+      - main
 
 jobs:
   test-pipelines:
